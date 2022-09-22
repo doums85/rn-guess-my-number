@@ -1,31 +1,53 @@
 import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  useWindowDimensions,
+  Platform,
+  ScrollView,
+  KeyboardAvoidingView,
+} from 'react-native';
 import { NumberInput } from '../components/game';
 import { Card, InstructionText } from '../components/ui';
 import { COLORS } from '../constants/Colors';
 
 export default function StartGameScreen({ pickedNumberHandler }) {
-  return (
-    <View style={styles.wrapper}>
-      <Text style={styles.title}>Guess My Number</Text>
+  // Static => Dimensions
+  //const { width, height } = Dimensions.get('window');
 
-      {/* Card */}
-      <Card>
-        <InstructionText style={{ color: 'red' }}>
-          Enter a Number
-        </InstructionText>
-        {/* Number Input */}
-        <NumberInput pickedNumberHandler={pickedNumberHandler} />
-      </Card>
-    </View>
+  // Dynamic => useWindowDimensions
+  const { width, height } = useWindowDimensions();
+  const marginTop = height < 440 ? 30 : 100;
+
+  return (
+    <ScrollView style={styles.screen}>
+      <KeyboardAvoidingView style={styles.screen} behavior="position">
+        <View style={[styles.wrapper, { marginTop }]}>
+          <Text style={styles.title}>Guess My Number</Text>
+
+          {/* Card */}
+          <Card>
+            <InstructionText style={{ color: 'red' }}>
+              Enter a Number
+            </InstructionText>
+            {/* Number Input */}
+            <NumberInput pickedNumberHandler={pickedNumberHandler} />
+          </Card>
+        </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 }
 
-
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+  },
   wrapper: {
     flex: 1,
-    marginTop: 100,
+    // marginTop: 100,
     padding: 20,
   },
   title: {

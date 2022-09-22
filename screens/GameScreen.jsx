@@ -1,5 +1,12 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Platform, FlatList } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Platform,
+  FlatList,
+  ScrollView,
+} from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 
 // Component import
@@ -46,41 +53,43 @@ score > high => high = score
 
   return (
     <View style={styles.screen}>
-      <Title>Opponent's Guess</Title>
-      <Card>
-        {/* BOX  */}
-        <View style={styles.box}>
-          <Text style={styles.boxText}>?</Text>
-        </View>
-        {/* INPUT */}
-        <View style={styles.containerInput}>
-          <NumberInput
-            opponentNumber={opponentsGuess[opponentsGuess.length - 1]}
-            pickedNumberHandler={onPickNumber}
-            variant={true}
-          />
-        </View>
-      </Card>
+      <ScrollView style={{ flex: 2 }} showsVerticalScrollIndicator={false}>
+        <Title>Opponent's Guess</Title>
+        <Card>
+          {/* BOX  */}
+          <View style={styles.box}>
+            <Text style={styles.boxText}>?</Text>
+          </View>
+          {/* INPUT */}
+          <View style={styles.containerInput}>
+            <NumberInput
+              opponentNumber={opponentsGuess[opponentsGuess.length - 1]}
+              pickedNumberHandler={onPickNumber}
+              variant={true}
+            />
+          </View>
+        </Card>
 
-      {/* Indicator lower or high */}
-      <Text style={styles.textIndicator}>
-        {opponentsGuess[opponentsGuess.length - 1] > secretNumber
-          ? '📈 Too High !'
-          : '📉 Too Low !'}
-      </Text>
+        {/* Indicator lower or high */}
+        <Text style={styles.textIndicator}>
+          {opponentsGuess[opponentsGuess.length - 1] > secretNumber
+            ? '📈 Too High !'
+            : '📉 Too Low !'}
+        </Text>
 
-      {/* Score */}
-      <View style={styles.containerScore}>
-        {/* Score text */}
-        <View style={styles.score}>
-          {/* icon  */}
-          <Entypo name="heart" size={24} color="crimson" />
-          <Text style={styles.scoreText}>{score} </Text>
+        {/* Score */}
+        <View style={styles.containerScore}>
+          {/* Score text */}
+          <View style={styles.score}>
+            {/* icon  */}
+            <Entypo name="heart" size={24} color="crimson" />
+            <Text style={styles.scoreText}>{score} </Text>
+          </View>
+          {/* High Score */}
+          <Text style={styles.scoreText}>High Score : {highScore} </Text>
         </View>
-        {/* High Score */}
-        <Text style={styles.scoreText}>High Score : {highScore} </Text>
-      </View>
-
+      </ScrollView>
+{/* Button => modal */}
       {/* List Opponents  */}
       <View style={styles.containerList}>
         <FlatList
@@ -97,7 +106,7 @@ score > high => high = score
       </View>
       {/* 
       // 15 => Opponent's Guess :  15
-      */}
+    */}
     </View>
   );
 }
@@ -148,7 +157,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
   },
   containerList: {
-    flex: 1,
+    flex: 0.25,
     padding: 16,
   },
   containerScore: {
